@@ -41,62 +41,25 @@ Back-to-back appointments are allowed.
 
 ### Status Enum
 
-```ruby
+```bash
 enum :status, {
   scheduled: "scheduled",
   cancelled: "cancelled"
 }
+```
 
-Provides:
-
-scheduled?
-
-cancelled?
-
-cancelled!
-
-Cancel Appointment
-
-Custom route:
-
-PATCH /appointments/:id/cancel
-
-If already cancelled → returns error
-Else → updates status to cancelled
-
-Pagination Rules
-
-2 results per page
-
-Maximum 4 pages allowed
-
-Requests beyond page 4 return error
-
-Example:
-
-GET /appointments?page=1
-
-Response:
-
-{
-  "data": [...],
-  "meta": {
-    "page": 1,
-    "per_page": 2,
-    "total": 10,
-    "max_pages": 4
-  }
-}
-📂 API Endpoints
+API Endpoints
+```bash
 Method	Endpoint	Description
 GET	/appointments	List appointments
 GET	/appointments/:id	Show appointment
 POST	/appointments	Create appointment
 PATCH	/appointments/:id	Update appointment
 PATCH	/appointments/:id/cancel	Cancel appointment
-
+```
 
 Example Create Request
+```bash
 curl -X POST http://localhost:3000/appointments \
   -H "Content-Type: application/json" \
   -d '{
@@ -105,9 +68,10 @@ curl -X POST http://localhost:3000/appointments \
       "end_time": "2026-02-25T11:00:00"
     }
   }'
-
+```
 
 Database Schema
+```bash
 create_table "appointments" do |t|
   t.datetime "start_time"
   t.datetime "end_time"
@@ -115,27 +79,7 @@ create_table "appointments" do |t|
   t.datetime "created_at"
   t.datetime "updated_at"
 end
-
-Indexes:
-
-start_time + end_time
-
-status
-
-Setup Instructions
-
-Clone repo
-
-Run:
-
-bundle install
-rails db:create
-rails db:migrate
-rails s
-
-Visit:
-
-http://localhost:3000/appointments
+```
 
 
 ## Key Design Decisions
