@@ -19,6 +19,22 @@ A Rails 8 API-only application that manages appointment scheduling with:
 - ActiveRecord
 
 ---
+## Setup Instructions
+
+### Clone repo
+
+Run:
+```bash
+bundle install
+rails db:create
+rails db:migrate
+rails s
+```
+
+Visit:
+http://localhost:3000/appointments
+
+---
 
 ## Features
 
@@ -50,27 +66,18 @@ enum :status, {
 
 API Endpoints
 ```bash
-Method	Endpoint	Description
-GET	/appointments	List appointments
-GET	/appointments/:id	Show appointment
-POST	/appointments	Create appointment
-PATCH	/appointments/:id	Update appointment
-PATCH	/appointments/:id/cancel	Cancel appointment
+| HTTP Method | Endpoint                         | Purpose                      |
+|-------------|----------------------------------|------------------------------|
+| GET         | `/appointments`                  | Retrieve paginated list      |
+| GET         | `/appointments/:id`              | Retrieve single appointment  |
+| POST        | `/appointments`                  | Create new appointment       |
+| PATCH       | `/appointments/:id`              | Update appointment details   |
+| PATCH       | `/appointments/:id/cancel`       | Cancel an appointment        |
 ```
 
-Example Create Request
-```bash
-curl -X POST http://localhost:3000/appointments \
-  -H "Content-Type: application/json" \
-  -d '{
-    "appointment": {
-      "start_time": "2026-02-25T10:00:00",
-      "end_time": "2026-02-25T11:00:00"
-    }
-  }'
-```
 
-Database Schema
+
+### Database Schema
 ```bash
 create_table "appointments" do |t|
   t.datetime "start_time"
@@ -84,12 +91,12 @@ end
 
 ## Key Design Decisions
 
-Used enum for clean status handling
+- Used enum for clean status handling
 
-Used model-level validation for overlap protection
+- Used model-level validation for overlap protection
 
-Added database indexes for performance
+- Added database indexes for performance
 
-Limited pagination intentionally for API boundary control
+- Limited pagination intentionally for API boundary control
 
-Built API in Rails API-only mode for lightweight backend
+- Built API in Rails API-only mode for lightweight backend
